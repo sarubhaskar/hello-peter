@@ -12,3 +12,9 @@ def hello():
 @app.route("/quotes.json")
 def index():
     return db.quotes_all()
+
+@app.route("/quotes.json", methods=["POST"])
+def create():
+    body = request.form.get("body")
+    rarity = request.form.get("rarity")
+    return db.quotes_create(body, rarity)

@@ -18,7 +18,7 @@ def initial_setup():
         """
         CREATE TABLE quotes (
           id INTEGER PRIMARY KEY NOT NULL,
-          name TEXT,
+          body TEXT,
           rarity TEXT
         );
         """
@@ -45,7 +45,7 @@ def initial_setup():
     ]
     conn.executemany(
         """
-        INSERT INTO quotes (name, rarity)
+        INSERT INTO quotes (body, rarity)
         VALUES (?,?)
         """,
         quotes_seed_data,
@@ -67,3 +67,17 @@ def quotes_all():
         """
     ).fetchall()
     return [dict(row) for row in rows]
+
+
+def quotes_create(body, rarity):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        INSERT INTO quotes (body, rarity)
+        VALUES (?, ?)
+        RETURNING *
+        """,
+        (body, rarity),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
