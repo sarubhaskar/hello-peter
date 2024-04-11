@@ -81,3 +81,16 @@ def quotes_create(body, rarity):
     ).fetchone()
     conn.commit()
     return dict(row)
+
+def quotes_update_by_id(id, body, rarity):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        UPDATE quotes SET body = ?, rarity = ?
+        WHERE id = ?
+        RETURNING *
+        """,
+        (body, rarity, id),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
