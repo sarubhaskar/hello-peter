@@ -25,6 +25,10 @@ def update(id):
     rarity = request.form.get("rarity")
     return db.quotes_update_by_id(id, body, rarity)
 
+@app.route("/quotes/<id>.json")
+def show(id):
+    return db.quotes_find_by_id(id)
+
 @app.route("/quotes/<id>.json", methods=["DELETE"])
 def destroy(id):
     return db.quotes_destroy_by_id(id)
