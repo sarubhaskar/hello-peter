@@ -95,6 +95,17 @@ def quotes_update_by_id(id, body, rarity):
     conn.commit()
     return dict(row)
 
+def quotes_find_by_id(id):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        SELECT * FROM quotes
+        WHERE id = ?
+        """,
+        (id,),
+    ).fetchone()
+    return dict(row)
+
 def quotes_destroy_by_id(id):
     conn = connect_to_db()
     row = conn.execute(
