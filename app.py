@@ -1,6 +1,7 @@
 import db
 from flask_cors import CORS
 from flask import Flask, request
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -25,9 +26,9 @@ def update(id):
     rarity = request.form.get("rarity")
     return db.quotes_update_by_id(id, body, rarity)
 
-@app.route("/quotes/<id>.json")
-def show(id):
-    return db.quotes_find_by_id(id)
+@app.route("/quotes/random.json")
+def show_random():
+    return db.quotes_find_random()
 
 @app.route("/quotes/<id>.json", methods=["DELETE"])
 def destroy(id):
