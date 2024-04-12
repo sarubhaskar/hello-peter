@@ -1,4 +1,9 @@
 import db
+from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
 
 from flask import Flask, request
 
@@ -24,3 +29,7 @@ def update(id):
     body = request.form.get("body")
     rarity = request.form.get("rarity")
     return db.quotes_update_by_id(id, body, rarity)
+
+@app.route("/quotes/<id>.json", methods=["DELETE"])
+def destroy(id):
+    return db.quotes_destroy_by_id(id)

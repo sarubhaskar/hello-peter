@@ -94,3 +94,16 @@ def quotes_update_by_id(id, body, rarity):
     ).fetchone()
     conn.commit()
     return dict(row)
+
+def quotes_destroy_by_id(id):
+    print(id)
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        DELETE from quotes
+        WHERE id = ?
+        """,
+        id,
+    )
+    conn.commit()
+    return {"message": "Quote destroyed successfully"}
