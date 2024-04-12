@@ -1,4 +1,5 @@
 import sqlite3
+import random
 
 
 def connect_to_db():
@@ -95,14 +96,14 @@ def quotes_update_by_id(id, body, rarity):
     conn.commit()
     return dict(row)
 
-def quotes_find_by_id(id):
+def quotes_find_random():
     conn = connect_to_db()
     row = conn.execute(
         """
         SELECT * FROM quotes
-        WHERE id = ?
-        """,
-        (id,),
+        ORDER BY RANDOM()
+        LIMIT 1
+        """
     ).fetchone()
     return dict(row)
 
